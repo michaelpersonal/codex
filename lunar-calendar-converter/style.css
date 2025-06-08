@@ -2,8 +2,10 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background: #8b0000 url('dragon.svg') center/cover no-repeat fixed;
-    color: #ffd700;
+    background: #ffeb3b url('dragon-collage.svg') repeat fixed;
+    background-size: 300px 300px;
+    color: #8b0000;
+
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -11,7 +13,7 @@ body {
 }
 
 h1 {
-    color: #ffd700;
+    color: #8b0000;
     margin-bottom: 20px;
 
 }
@@ -26,7 +28,8 @@ h1 {
 }
 
 .calendar {
-    border: 2px solid #ffd700;
+    border: 2px solid #8b0000;
+
     background-color: rgba(255,255,255,0.8);
     padding: 15px;
     width: 100%;
