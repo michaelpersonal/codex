@@ -1,0 +1,22 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+#container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.calendar {
+    border: 1px solid #ccc;
+    padding: 10px;
+    flex: 1 1 200px;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}

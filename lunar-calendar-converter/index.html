@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Lunar Calendar Converter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Chinese Lunar Calendar Converter</h1>
+    <div id="container">
+        <div class="calendar" id="gregorian">
+            <h2>Gregorian Date</h2>
+            <input type="date" id="gregDate">
+        </div>
+        <div class="calendar" id="lunar">
+            <h2>Lunar Date</h2>
+            <select id="lunarYear"></select>
+            <select id="lunarMonth"></select>
+            <select id="lunarDay"></select>
+            <label><input type="checkbox" id="isLeap"> Leap Month</label>
+        </div>
+    </div>
+    <p id="result"></p>
+
+    <script src="script.js"></script>
+</body>
+</html>
