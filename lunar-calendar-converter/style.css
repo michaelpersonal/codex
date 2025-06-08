@@ -13,6 +13,7 @@ body {
 h1 {
     color: #ffd700;
     margin-bottom: 20px;
+
 }
 
 #container {
@@ -42,6 +43,7 @@ input[type="date"], select, button {
 
 button {
     cursor: pointer;
+
 }
 
 #result {
