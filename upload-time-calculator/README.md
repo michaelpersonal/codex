@@ -2,6 +2,7 @@
 
 This simple static webpage allows you to estimate how long it will take to upload a file based on the file size and your network's upload speed. The page uses colors inspired by **Dematic** branding.
 
+
 ## Running Locally
 Open `index.html` in a web browser.
 
