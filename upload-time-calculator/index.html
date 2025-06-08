@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Time Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Time Calculator</h1>
+        <form id="upload-form">
+            <label for="size">File Size:</label>
+            <input type="number" id="size" required min="0" step="any">
+            <select id="size-unit">
+                <option value="KB">KB</option>
+                <option value="MB" selected>MB</option>
+                <option value="GB">GB</option>
+            </select>
+
+            <label for="speed">Upload Speed:</label>
+            <input type="number" id="speed" required min="0" step="any">
+            <select id="speed-unit">
+                <option value="Kbps">Kbps</option>
+                <option value="Mbps" selected>Mbps</option>
+                <option value="MBps">MBps</option>
+            </select>
+
+            <button type="submit">Calculate</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
