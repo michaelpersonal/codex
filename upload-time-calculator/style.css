@@ -1,7 +1,7 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #1e3c72, #2a5298);
-    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f5f5;
+    color: #000;
     margin: 0;
     min-height: 100vh;
     display: flex;
@@ -13,11 +13,11 @@ body {
 .container {
     width: 100%;
     max-width: 450px;
-    background: rgba(255, 255, 255, 0.1);
+    background: #fff;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
+    border: 2px solid #FFC20E;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 label {
@@ -38,8 +38,8 @@ select {
 button {
     margin-top: 15px;
     padding: 10px 20px;
-    background-color: #ff5722;
-    color: #fff;
+    background-color: #FFC20E;
+    color: #000;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -47,12 +47,12 @@ button {
 }
 
 button:hover {
-    background-color: #ff3b00;
+    background-color: #FFD84D;
 }
 
 .result {
     margin-top: 20px;
     font-size: 1.4em;
     font-weight: bold;
-    color: #ffd700;
+    color: #333;
 }
