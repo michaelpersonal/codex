@@ -16,9 +16,9 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   // Helper function to construct image URL
   const getImageUrl = (imagePath: string) => {
     if (imagePath.startsWith('images/')) {
-      return `http://localhost:8000/${imagePath}`;
+      return `https://192.168.1.85:8000/${imagePath}`;
     } else {
-      return `http://localhost:8000/uploads/${imagePath}`;
+      return `https://192.168.1.85:8000/uploads/${imagePath}`;
     }
   };
 
@@ -44,13 +44,21 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   return (
     <div className="search-results">
       <h3>Potential Matches ({results.length})</h3>
+      {results.length > 1 && (
+        <div className="match-notice">
+          <p>⚠️ Multiple close matches found. Please select the correct one:</p>
+        </div>
+      )}
       <div className="results-grid">
         {results.map((result, index) => (
           <div 
             key={result.spare_part.id} 
-            className="result-card"
+            className={`result-card ${index === 0 ? 'top-match' : ''}`}
             onClick={() => onSelectResult(result)}
           >
+            {index === 0 && (
+              <div className="top-match-badge">🥇 Best Match</div>
+            )}
             <div className="result-image">
               {result.spare_part.image_path ? (
                 <img 
@@ -95,6 +103,9 @@ const SearchResults: React.FC<SearchResultsProps> = ({
               <p className="match-reason">
                 {result.match_reason}
               </p>
+              <button className="select-button">
+                Select This Match
+              </button>
             </div>
           </div>
         ))}

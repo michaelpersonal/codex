@@ -18,7 +18,7 @@ MAPPING_FILE = os.path.join(os.path.dirname(__file__), "part_image_embeddings_ma
 sift = cv2.SIFT_create()
 
 def get_image_features(image_path):
-    """Extract SIFT keypoints and descriptors from image"""
+    """Extract SIFT keypoints and descriptors from image with preprocessing"""
     try:
         # Read image
         img = cv2.imread(image_path)
@@ -26,10 +26,29 @@ def get_image_features(image_path):
             print(f"⚠️ Could not read image: {image_path}")
             return None, None
         
-        # Convert to grayscale
+        # Apply preprocessing to make features more robust to lighting changes
+        # 1. Convert to grayscale
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         
-        # Detect SIFT keypoints and descriptors
+        # 2. Apply histogram equalization to normalize lighting
+        gray = cv2.equalizeHist(gray)
+        
+        # 3. Apply Gaussian blur to reduce noise
+        gray = cv2.GaussianBlur(gray, (3, 3), 0)
+        
+        # 4. Apply adaptive histogram equalization for better local contrast
+        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+        gray = clahe.apply(gray)
+        
+        # Extract SIFT features with more lenient parameters
+        sift = cv2.SIFT_create(
+            nfeatures=0,  # No limit on features
+            nOctaveLayers=3,
+            contrastThreshold=0.04,  # Lower threshold for more features
+            edgeThreshold=10,
+            sigma=1.6
+        )
+        
         keypoints, descriptors = sift.detectAndCompute(gray, None)
         
         if descriptors is None or len(keypoints) < 10:

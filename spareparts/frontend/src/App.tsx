@@ -15,9 +15,9 @@ function App() {
   // Helper function to construct image URL
   const getImageUrl = (imagePath: string) => {
     if (imagePath.startsWith('images/')) {
-      return `http://localhost:8000/${imagePath}`;
+      return `https://192.168.1.85:8000/${imagePath}`;
     } else {
-      return `http://localhost:8000/uploads/${imagePath}`;
+      return `https://192.168.1.85:8000/uploads/${imagePath}`;
     }
   };
 
