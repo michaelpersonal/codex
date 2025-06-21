@@ -1,6 +1,6 @@
 # Setup Guide - Spare Parts Identification System
 
-This guide will help you set up and run the AI-powered spare parts identification system.
+This guide will help you set up and run the AI-powered spare parts identification system using OpenAI's GPT-4 Vision API.
 
 ## Prerequisites
 
@@ -9,7 +9,7 @@ Before starting, ensure you have the following installed:
 - **Python 3.8+** - [Download here](https://www.python.org/downloads/)
 - **Node.js 14+** - [Download here](https://nodejs.org/)
 - **npm** - Usually comes with Node.js
-- **Ollama** - [Installation guide](https://ollama.ai/download)
+- **OpenAI API Key** - [Get one here](https://platform.openai.com/api-keys)
 
 ## Quick Start (Recommended)
 
@@ -18,7 +18,12 @@ Before starting, ensure you have the following installed:
    cd spareparts
    ```
 
-2. **Run the startup script**
+2. **Set up your OpenAI API key**
+   ```bash
+   export OPENAI_API_KEY="your_openai_api_key_here"
+   ```
+
+3. **Run the startup script**
    ```bash
    ./start.sh
    ```
@@ -28,7 +33,7 @@ Before starting, ensure you have the following installed:
    - Set up the database with sample data
    - Start both backend and frontend servers
 
-3. **Access the application**
+4. **Access the application**
    - Frontend: http://localhost:3000
    - Backend API: http://localhost:8000
    - API Documentation: http://localhost:8000/docs
@@ -82,28 +87,31 @@ If you prefer to set up manually or the startup script doesn't work:
    npm start
    ```
 
-## Ollama Setup (Required for AI Features)
+## OpenAI API Setup (Required for AI Features)
 
-The application uses Ollama for AI-powered image recognition. Follow these steps:
+The application uses OpenAI's GPT-4 Vision API for AI-powered image recognition. Follow these steps:
 
-1. **Install Ollama**
-   - Visit [ollama.ai](https://ollama.ai/download)
-   - Download and install for your operating system
+1. **Get an OpenAI API Key**
+   - Visit [OpenAI Platform](https://platform.openai.com/api-keys)
+   - Sign up or log in to your account
+   - Create a new API key
 
-2. **Pull the multimodal model**
+2. **Set the API Key**
+   
+   **Option A: Environment Variable (Recommended)**
    ```bash
-   ollama pull llava
+   export OPENAI_API_KEY="your_api_key_here"
+   ```
+   
+   **Option B: Create a .env file**
+   ```bash
+   # In the backend directory
+   echo "OPENAI_API_KEY=your_api_key_here" > .env
    ```
 
-3. **Start Ollama service**
-   ```bash
-   ollama serve
-   ```
-
-4. **Verify installation**
-   ```bash
-   curl http://localhost:11434/api/tags
-   ```
+3. **Verify API Key**
+   - The application will automatically check if the API key is valid
+   - You can test it by visiting http://localhost:8000/health
 
 ## Usage
 
@@ -145,22 +153,25 @@ You can add your own spare parts to the database:
 Create a `.env` file in the backend directory:
 
 ```env
+# OpenAI API
+OPENAI_API_KEY=your_openai_api_key_here
+
 # Database
 DATABASE_URL=sqlite:///./spareparts.db
-
-# Ollama
-OLLAMA_URL=http://localhost:11434
-OLLAMA_MODEL=llava
 
 # API Settings
 API_HOST=0.0.0.0
 API_PORT=8000
+
+# Upload Settings
+UPLOAD_DIR=uploads
+MAX_FILE_SIZE=10485760
 ```
 
 ### Customizing AI Recognition
 
 Edit `backend/ai_service.py` to:
-- Change the AI model
+- Change the AI model (e.g., to gpt-4o)
 - Modify recognition prompts
 - Adjust confidence thresholds
 
@@ -169,9 +180,9 @@ Edit `backend/ai_service.py` to:
 ### Common Issues
 
 1. **"AI model not available"**
-   - Ensure Ollama is running: `ollama serve`
-   - Check if llava model is installed: `ollama list`
-   - Pull the model: `ollama pull llava`
+   - Check if OPENAI_API_KEY is set correctly
+   - Verify your API key is valid at https://platform.openai.com/api-keys
+   - Ensure you have sufficient credits in your OpenAI account
 
 2. **"Camera not working"**
    - Ensure you're using HTTPS or localhost
@@ -187,11 +198,29 @@ Edit `backend/ai_service.py` to:
    - Delete `spareparts.db` and restart
    - Run `python sample_data.py` to recreate database
 
+5. **"OpenAI API errors"**
+   - Check your API key is correct
+   - Verify you have sufficient credits
+   - Check OpenAI service status at https://status.openai.com/
+
 ### Logs and Debugging
 
 - **Backend logs**: Check terminal where backend is running
 - **Frontend logs**: Open browser developer tools (F12)
-- **Ollama logs**: Check `ollama logs` command
+- **OpenAI API logs**: Check your OpenAI dashboard
+
+## Cost Considerations
+
+Using OpenAI's GPT-4 Vision API incurs costs:
+
+- **GPT-4 Vision**: ~$0.01-0.03 per image analysis
+- **Cost depends on**: Image size, token usage, and API tier
+- **Monitoring**: Check your usage at https://platform.openai.com/usage
+
+For production use, consider:
+- Setting up usage limits
+- Implementing caching for repeated images
+- Using a lower-cost model for initial screening
 
 ## Production Deployment
 
@@ -202,7 +231,8 @@ For production use, consider:
 3. **Use HTTPS**
 4. **Configure proper logging**
 5. **Set up monitoring and alerts**
-6. **Use a production-grade AI service**
+6. **Implement rate limiting for API calls**
+7. **Set up cost monitoring for OpenAI usage**
 
 ## Support
 
@@ -212,6 +242,7 @@ If you encounter issues:
 2. Review the API documentation at http://localhost:8000/docs
 3. Check the logs for error messages
 4. Ensure all prerequisites are properly installed
+5. Verify your OpenAI API key and credits
 
 ## License
 

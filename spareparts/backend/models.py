@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional, List
 from datetime import datetime
 
@@ -29,6 +29,8 @@ class SparePartCreate(BaseModel):
     image_path: Optional[str] = None
 
 class SparePartResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    
     id: int
     material_number: str
     description: str
@@ -37,9 +39,6 @@ class SparePartResponse(BaseModel):
     specifications: Optional[str] = None
     image_path: Optional[str] = None
     created_at: datetime
-    
-    class Config:
-        from_attributes = True
 
 class SearchResult(BaseModel):
     spare_part: SparePartResponse

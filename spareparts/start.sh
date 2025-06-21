@@ -20,6 +20,25 @@ if ! command -v npm &> /dev/null; then
     exit 1
 fi
 
+# Check for OpenAI API key
+if [ -z "$OPENAI_API_KEY" ]; then
+    if [ -f "backend/.env" ]; then
+        echo "📋 Loading OpenAI API key from backend/.env"
+        export $(cat backend/.env | xargs)
+    else
+        echo "⚠️  OpenAI API key not found."
+        echo "   Run: python3 setup_openai.py"
+        echo "   Or set: export OPENAI_API_KEY='your_api_key'"
+        echo ""
+        read -p "Do you want to continue without AI features? (y/N): " -n 1 -r
+        echo
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            echo "Setup cancelled. Please configure OpenAI API key first."
+            exit 1
+        fi
+    fi
+fi
+
 echo "📦 Installing backend dependencies..."
 cd backend
 if [ ! -d "venv" ]; then

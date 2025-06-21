@@ -12,6 +12,15 @@ function App() {
   const [selectedResult, setSelectedResult] = useState<SearchResult | null>(null);
   const [healthStatus, setHealthStatus] = useState<HealthCheck | null>(null);
 
+  // Helper function to construct image URL
+  const getImageUrl = (imagePath: string) => {
+    if (imagePath.startsWith('images/')) {
+      return `http://localhost:8000/${imagePath}`;
+    } else {
+      return `http://localhost:8000/uploads/${imagePath}`;
+    }
+  };
+
   useEffect(() => {
     // Check API health on component mount
     checkHealth();
@@ -115,7 +124,7 @@ function App() {
                 <div className="detail-image">
                   {selectedResult.spare_part.image_path ? (
                     <img 
-                      src={`http://localhost:8000/uploads/${selectedResult.spare_part.image_path}`}
+                      src={getImageUrl(selectedResult.spare_part.image_path)}
                       alt={selectedResult.spare_part.description}
                     />
                   ) : (

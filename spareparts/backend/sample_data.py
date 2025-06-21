@@ -19,42 +19,48 @@ def create_sample_data():
                 "description": "Hydraulic Pump Seal Kit",
                 "category": "Hydraulics",
                 "manufacturer": "Parker Hannifin",
-                "specifications": "High-pressure hydraulic seal kit for industrial pumps. Compatible with Parker P1 series pumps. Temperature range: -40°C to +120°C. Pressure rating: 350 bar."
+                "specifications": "High-pressure hydraulic seal kit for industrial pumps. Compatible with Parker P1 series pumps. Temperature range: -40°C to +120°C. Pressure rating: 350 bar.",
+                "image_path": "images/1/IMG_3706.jpg"
             },
             {
                 "material_number": "SP002",
                 "description": "Bearing Assembly - Deep Groove Ball Bearing",
                 "category": "Bearings",
                 "manufacturer": "SKF",
-                "specifications": "6205-2RS deep groove ball bearing. Bore: 25mm, OD: 52mm, Width: 15mm. Sealed on both sides. Load capacity: 14.0 kN dynamic, 7.8 kN static."
+                "specifications": "6205-2RS deep groove ball bearing. Bore: 25mm, OD: 52mm, Width: 15mm. Sealed on both sides. Load capacity: 14.0 kN dynamic, 7.8 kN static.",
+                "image_path": "images/2/IMG_3705.jpg"
             },
             {
                 "material_number": "SP003",
                 "description": "Motor Coupling - Flexible Coupling",
                 "category": "Power Transmission",
                 "manufacturer": "Lovejoy",
-                "specifications": "L-type flexible coupling. Bore sizes: 1/2\" to 1-1/4\". Torque capacity: 1,800 in-lbs. Material: Cast iron with rubber spider. For motor-to-pump applications."
+                "specifications": "L-type flexible coupling. Bore sizes: 1/2\" to 1-1/4\". Torque capacity: 1,800 in-lbs. Material: Cast iron with rubber spider. For motor-to-pump applications.",
+                "image_path": "images/3/IMG_3704.jpg"
             },
             {
                 "material_number": "SP004",
                 "description": "Filter Element - Air Filter",
                 "category": "Filtration",
                 "manufacturer": "Donaldson",
-                "specifications": "P181017 air filter element. Efficiency: 99.9% at 10 microns. Flow rate: 200 CFM. Operating temperature: -40°F to +185°F. For industrial air compressors."
+                "specifications": "P181017 air filter element. Efficiency: 99.9% at 10 microns. Flow rate: 200 CFM. Operating temperature: -40°F to +185°F. For industrial air compressors.",
+                "image_path": "images/4/IMG_3703.jpg"
             },
             {
                 "material_number": "SP005",
                 "description": "Valve - Solenoid Valve",
                 "category": "Valves",
                 "manufacturer": "ASCO",
-                "specifications": "2-way normally closed solenoid valve. Port size: 1/2\" NPT. Voltage: 24V DC. Pressure range: 0-150 PSI. Body material: Brass. For pneumatic systems."
+                "specifications": "2-way normally closed solenoid valve. Port size: 1/2\" NPT. Voltage: 24V DC. Pressure range: 0-150 PSI. Body material: Brass. For pneumatic systems.",
+                "image_path": "images/5/IMG_3702.jpg"
             },
             {
                 "material_number": "SP006",
                 "description": "Gear - Spur Gear",
                 "category": "Gears",
                 "manufacturer": "Martin Sprocket",
-                "specifications": "20-tooth spur gear. Module: 2.5. Bore: 20mm. Material: 1045 steel. Heat treated to 45-50 HRC. For industrial gearboxes."
+                "specifications": "20-tooth spur gear. Module: 2.5. Bore: 20mm. Material: 1045 steel. Heat treated to 45-50 HRC. For industrial gearboxes.",
+                "image_path": "images/6/IMG_3701.jpg"
             },
             {
                 "material_number": "SP007",

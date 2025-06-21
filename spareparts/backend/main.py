@@ -9,7 +9,6 @@ from datetime import datetime
 
 from models import SparePart, SparePartCreate, SparePartResponse, SearchResult, ImageUploadResponse
 from database import get_db, create_tables
-from ai_service import AIService
 
 # Create FastAPI app
 app = FastAPI(
@@ -34,9 +33,22 @@ if not os.path.exists(UPLOAD_DIR):
 
 # Mount static files
 app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
+app.mount("/images", StaticFiles(directory="images"), name="images")
 
 # Initialize AI service
-ai_service = AIService()
+ai_service = None
+ai_available = False
+
+try:
+    from ai_service import AIService
+    ai_service = AIService()
+    ai_available = True
+    print("✅ AI service initialized successfully")
+except Exception as e:
+    print(f"⚠️  AI service initialization failed: {e}")
+    print("   The application will run without AI features")
+    ai_service = None
+    ai_available = False
 
 # Create database tables on startup
 @app.on_event("startup")
@@ -50,10 +62,17 @@ async def root():
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
-    ai_available = ai_service.is_model_available()
+    global ai_available
+    if ai_service:
+        try:
+            ai_available = ai_service.is_model_available()
+        except:
+            ai_available = False
+    
     return {
         "status": "healthy",
         "ai_model_available": ai_available,
+        "ai_provider": "SIFT-based Image Similarity" if ai_available else "Not configured",
         "timestamp": datetime.now().isoformat()
     }
 
@@ -97,7 +116,17 @@ async def upload_image(
         ]
         
         # Analyze image with AI
-        ai_matches = ai_service.analyze_image(image_data, spare_parts_data)
+        if ai_service and ai_available:
+            ai_matches = ai_service.analyze_image(image_data, spare_parts_data)
+        else:
+            # Fallback: return first few parts with low confidence
+            ai_matches = []
+            for i, part in enumerate(spare_parts_data[:3]):
+                ai_matches.append({
+                    "material_number": part['material_number'],
+                    "confidence_score": 0.3 - (i * 0.1),
+                    "match_reason": "AI service not available - please verify manually"
+                })
         
         # Convert AI matches to SearchResult objects
         search_results = []
@@ -111,7 +140,7 @@ async def upload_image(
                 
                 if spare_part:
                     search_result = SearchResult(
-                        spare_part=SparePartResponse.from_orm(spare_part),
+                        spare_part=SparePartResponse.model_validate(spare_part),
                         confidence_score=match.get("confidence_score", 0.0),
                         match_reason=match.get("match_reason", "AI analysis")
                     )
@@ -139,7 +168,7 @@ async def get_spare_parts(
 ):
     """Get all spare parts with pagination"""
     spare_parts = db.query(SparePart).offset(skip).limit(limit).all()
-    return spare_parts
+    return [SparePartResponse.model_validate(part) for part in spare_parts]
 
 @app.get("/spare-parts/{material_number}", response_model=SparePartResponse)
 async def get_spare_part(material_number: str, db: Session = Depends(get_db)):
@@ -151,7 +180,7 @@ async def get_spare_part(material_number: str, db: Session = Depends(get_db)):
     if not spare_part:
         raise HTTPException(status_code=404, detail="Spare part not found")
     
-    return spare_part
+    return SparePartResponse.model_validate(spare_part)
 
 @app.post("/spare-parts", response_model=SparePartResponse)
 async def create_spare_part(
@@ -172,7 +201,7 @@ async def create_spare_part(
     db.commit()
     db.refresh(db_spare_part)
     
-    return db_spare_part
+    return SparePartResponse.model_validate(db_spare_part)
 
 @app.get("/search")
 async def search_spare_parts(
@@ -185,7 +214,7 @@ async def search_spare_parts(
         (SparePart.material_number.contains(query))
     ).all()
     
-    return spare_parts
+    return [SparePartResponse.model_validate(part) for part in spare_parts]
 
 if __name__ == "__main__":
     import uvicorn
